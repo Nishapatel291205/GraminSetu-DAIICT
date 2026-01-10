@@ -23,9 +23,9 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2">
-            <HeartPulse className="h-7 w-7 text-emerald-600" />
-            <span className="text-xl font-semibold tracking-tight">
-              ASHA+
+<img className="w-12 h-12" src="/public/logo.jpeg" alt="" />    
+        <span className="text-xl font-semibold tracking-tight">
+              GraminSetu
             </span>
           </div>
 

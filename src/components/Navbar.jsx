@@ -12,9 +12,10 @@ export default function Navbar() {
 
   return (
     <nav className="w-full bg-white border-b shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo - Ab ye bhi Translate hoga */}
-        <h1 className="text-xl font-bold text-emerald-600">
+      <div className="max-w-7xl mx-auto px-1 py-1 flex items-center justify-between">
+
+        <h1 className="flex items-center gap-2 text-xl font-bold text-emerald-600">
+          <img className="w-12 h-12" src="/logo.jpeg" alt="" />    
           {t('app_title')} 
         </h1>
 

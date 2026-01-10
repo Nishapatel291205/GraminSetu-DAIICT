@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useTranslation } from "react-i18next";
-import predictHeartRisk from "../edge_model"; // ✅ Decision Tree JS
+import predictHeartRisk from "../edge_model"; 
 
 export default function AddPatient() {
   const navigate = useNavigate();
