@@ -1,148 +1,71 @@
-import { Link } from "react-router-dom";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
-import { HeartPulse, Droplet, Activity, Scale } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import Navbar from "../components/Navbar";
+import { AlertCircle, CheckCircle, Info, MessageSquare, Heart } from "lucide-react";
 
-const data = [
-  { date: "Jan", sugar: 180, bp: 120, heart: 78, bmi: 24 },
-  { date: "Feb", sugar: 200, bp: 130, heart: 80, bmi: 24.5 },
-  { date: "Mar", sugar: 240, bp: 140, heart: 85, bmi: 25 },
-  { date: "Apr", sugar: 220, bp: 135, heart: 82, bmi: 24.8 },
-];
+export default function PatientAnalysis() {
+  const { state } = useLocation();
+  const { t } = useTranslation();
+  
+  if (!state) return <div className="p-10 text-center">No Data Found</div>;
+  const isHighRisk = state.riskResult === "High";
 
-export default function PatientHealthAnalysis() {
   return (
-    <div className="min-h-screen bg-slate-100">
-
-      {/* ================= NAVBAR ================= */}
-      <nav className="bg-white shadow-sm px-8 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-emerald-600">
-          Health Monitoring System
-        </h1>
-
-        <div className="flex gap-6 text-slate-700 font-medium">
-          <Link to="/dashboard" className="hover:text-emerald-600">
-            Dashboard
-          </Link>
-          <Link to="/add-patient" className="hover:text-emerald-600">
-            Add Patient
-          </Link>
-          <Link to="/patients" className="hover:text-emerald-600">
-            Patients
-          </Link>
-          <Link to="/" className="text-red-500">
-            Logout
-          </Link>
-        </div>
-      </nav>
-
-      {/* ================= PAGE CONTENT ================= */}
-      <div className="max-w-7xl mx-auto p-8 space-y-10">
-
-        {/* Header */}
-        <div>
-          <h2 className="text-3xl font-bold text-slate-900">
-            Patient Health Analysis
-          </h2>
-          <p className="text-slate-600 mt-1">
-            Aadhaar: <span className="font-semibold">123417478256</span>
-          </p>
-        </div>
-
-        {/* ================= GRAPHS ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-          <HealthCard title="Blood Sugar" icon={<Droplet />}>
-            <Chart data={data} dataKey="sugar" color="#10b981" />
-          </HealthCard>
-
-          <HealthCard title="Blood Pressure" icon={<HeartPulse />}>
-            <Chart data={data} dataKey="bp" color="#ef4444" />
-          </HealthCard>
-
-          <HealthCard title="Heart Rate" icon={<Activity />}>
-            <Chart data={data} dataKey="heart" color="#3b82f6" />
-          </HealthCard>
-
-          <HealthCard title="BMI" icon={<Scale />}>
-            <Chart data={data} dataKey="bmi" color="#f59e0b" />
-          </HealthCard>
-
-        </div>
-
-        {/* ================= OVERALL REPORT ================= */}
-        <div className="bg-white rounded-2xl shadow-sm p-8 space-y-4">
-          <h3 className="text-xl font-semibold text-slate-900">
-            Overall Health Report
-          </h3>
-
-          <p className="text-lg">
-            Risk Level:{" "}
-            <span className="font-bold text-green-600">NORMAL</span>
-          </p>
-
-          <p className="text-slate-600">
-            Vitals are stable. Maintain a healthy routine and monitor vitals regularly.
-          </p>
-
-          <div>
-            <h4 className="font-semibold text-slate-800 mt-4">
-              Suggestions
-            </h4>
-            <ul className="list-disc pl-6 text-slate-600 space-y-1">
-              <li>Reduce sugar intake</li>
-              <li>Daily walking (30 minutes)</li>
-              <li>Regular BP monitoring</li>
-              <li>Follow-up with physician</li>
-            </ul>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-slate-50 p-6">
+        <div className="max-w-4xl mx-auto space-y-6">
+          
+          {/* 1. Risk Level Banner */}
+          <div className={`p-8 rounded-3xl border-b-8 flex items-center gap-6 ${isHighRisk ? 'bg-red-50 border-red-500' : 'bg-emerald-50 border-emerald-500'}`}>
+            {isHighRisk ? <AlertCircle className="h-16 w-16 text-red-600" /> : <CheckCircle className="h-16 w-16 text-emerald-600" />}
+            <div>
+              <h2 className="text-sm font-bold text-slate-500 uppercase">{t('risk_result')}</h2>
+              <p className={`text-4xl font-black ${isHighRisk ? 'text-red-600' : 'text-emerald-600'}`}>
+                {isHighRisk ? t('high_risk') : t('low_risk')} ({state.riskProbability}%)
+              </p>
+            </div>
           </div>
+
+          {/* 2. Personalized Conditioning (Smoking/Alcohol) */}
+          <div className="bg-white p-6 rounded-2xl shadow-sm border">
+            <h3 className="text-lg font-bold flex items-center gap-2 mb-4">
+              <Info className="h-5 w-5 text-blue-600" /> {t('advice_title')}
+            </h3>
+            <div className="space-y-3">
+              {parseInt(state.smoke) === 1 && (
+                <div className="p-4 bg-orange-50 text-orange-800 rounded-xl border border-orange-100">
+                  {t('advice_smoke')}
+                </div>
+              )}
+              {parseInt(state.alco) === 1 && (
+                <div className="p-4 bg-blue-50 text-blue-800 rounded-xl border border-blue-100">
+                  {t('advice_alco')}
+                </div>
+              )}
+              {isHighRisk && (
+                <div className="p-4 bg-red-100 text-red-900 rounded-xl font-bold animate-pulse">
+                  {t('urgent_doc')}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 3. ASHA Worker Final Instruction */}
+          <div className="bg-emerald-900 text-white p-6 rounded-2xl shadow-xl">
+            <h3 className="text-lg font-bold flex items-center gap-2 mb-2">
+              <MessageSquare className="h-5 w-5 text-emerald-400" /> {t('asha_instruction')}
+            </h3>
+            <p className="text-emerald-50 text-md leading-relaxed">
+              {t('asha_tell_patient')}
+            </p>
+            <div className="mt-4 flex gap-4">
+               <span className="bg-emerald-800 px-3 py-1 rounded-full text-xs font-bold text-emerald-300">ACTION REQUIRED</span>
+            </div>
+          </div>
+
         </div>
-
       </div>
-    </div>
-  );
-}
-
-/* ================= REUSABLE COMPONENTS ================= */
-
-function HealthCard({ title, icon, children }) {
-  return (
-    <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
-      <div className="flex items-center gap-3">
-        <div className="p-2 rounded-lg bg-emerald-100 text-emerald-600">
-          {icon}
-        </div>
-        <h3 className="font-semibold text-slate-900">{title}</h3>
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function Chart({ data, dataKey, color }) {
-  return (
-    <div style={{ width: "100%", height: 250 }}>
-      <ResponsiveContainer>
-        <LineChart data={data}>
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Line
-            type="monotone"
-            dataKey={dataKey}
-            stroke={color}
-            strokeWidth={3}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    </>
   );
 }
