@@ -34,7 +34,7 @@ export default function LandingPage() {
             className="rounded-xl"
             onClick={() => navigate("/login")}
           >
-            ASHA Worker Login
+            Login In GraminSetu
           </Button>
         </div>
       </header>
@@ -54,9 +54,9 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-lg text-slate-600 mb-8">
-            ASHA+ is a human-centered healthcare coordination platform where
+            GraminSetu is a human-centered healthcare coordination platform where
             ASHA workers act as trusted bridges between rural communities and
-            doctors — ensuring continuity, prevention, and ethical use of
+            doctors ensuring continuity, prevention, and ethical use of
             technology.
           </p>
 
@@ -66,7 +66,7 @@ export default function LandingPage() {
               className="rounded-xl gap-2"
               onClick={() => navigate("/signup")}
             >
-              ASHA Worker Sign Up
+               NEW ASHA Worker- HAVE AN ACCOUNT? 
               <ArrowRight className="h-4 w-4" />
             </Button>
 

@@ -26,10 +26,7 @@ export default function AddPatient() {
     setLoading(true);
 
     try {
-      // 1. AGE -> DAYS (Model Constraint: input[0])
       const ageInDays = parseFloat(formData.age) * 365.25;
-
-      // 2. SUGAR CATEGORY (input[7])
       let glucCat = 1;
       const sugar = parseFloat(formData.glucose_mg);
       if (formData.is_fasting) {
@@ -37,13 +34,9 @@ export default function AddPatient() {
       } else {
         if (sugar >= 200) glucCat = 3; else if (sugar > 140) glucCat = 2;
       }
-
-      // 3. CHOLESTEROL CATEGORY (input[6])
       let cholCat = 1;
       const chol = parseFloat(formData.cholesterol_mg);
       if (chol >= 240) cholCat = 3; else if (chol >= 200) cholCat = 2;
-
-      // 4. PREPARE INPUT ARRAY (Order must match your edge_model exactly)
       const inputData = [
         ageInDays,                       // input[0]
         parseInt(formData.gender),       // input[1]
@@ -70,12 +63,8 @@ export default function AddPatient() {
         timestamp: new Date().toISOString(),
         synced: false
       };
-
-      // 6. SAVE OFFLINE (LocalStorage)
       const existing = JSON.parse(localStorage.getItem("offline_patients") || "[]");
       localStorage.setItem("offline_patients", JSON.stringify([...existing, patientRecord]));
-
-      // 7. GO TO ANALYSIS
       navigate(`/analysis/${formData.aadhaar}`, { state: patientRecord });
     } catch (err) {
       console.error("AI Error:", err);
