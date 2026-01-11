@@ -23,19 +23,27 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2">
-            <HeartPulse className="h-7 w-7 text-emerald-600" />
+          <img className="w-12 h-12" src="./logo.png" alt="" />
             <span className="text-xl font-semibold tracking-tight">
-              ASHA+
+              GraminSetu
             </span>
           </div>
 
           {/* Login Button (Header) */}
-          <Button
+          <div className="flex items-center gap-4">
+            <Button
             className="rounded-xl"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/ashaworker")}
           >
             ASHA Worker Login
           </Button>
+          <Button
+            className="rounded-xl"
+            onClick={() => navigate("/doctorlogin")}
+          >
+            Doctor Login
+          </Button>
+          </div>
         </div>
       </header>
 
@@ -54,9 +62,9 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-lg text-slate-600 mb-8">
-            ASHA+ is a human-centered healthcare coordination platform where
+            GraminSetu is a human-centered healthcare coordination platform where
             ASHA workers act as trusted bridges between rural communities and
-            doctors — ensuring continuity, prevention, and ethical use of
+            doctors ensuring continuity, prevention, and ethical use of
             technology.
           </p>
 

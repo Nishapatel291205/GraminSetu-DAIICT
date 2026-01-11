@@ -1,20 +1,27 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next"; // ✅ Language hook
+import { useTranslation } from "react-i18next";
+import { ArrowLeft, Stethoscope, ShieldCheck, ArrowRight, RefreshCcw } from "lucide-react";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation(); // ✅ Init translation
+  const { t, i18n } = useTranslation();
 
-  // ✅ Language change function
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
 
   return (
     <nav className="w-full bg-white border-b shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo - Ab ye bhi Translate hoga */}
-        <h1 className="text-xl font-bold text-emerald-600">
+      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <h1 className="flex items-center gap-2 text-xl font-bold text-emerald-600">
+          <button 
+            onClick={() => navigate(-1)} 
+            className="flex items-center gap-2 text-slate-500 hover:text-emerald-600 transition-colors group"
+          >
+          <div className="p-1.5 rounded-full group-hover:bg-emerald-50">
+            <ArrowLeft className="h-5 w-5" />
+          </div>
+          </button>
           {t('app_title')} 
         </h1>
 
